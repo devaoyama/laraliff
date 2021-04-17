@@ -2,6 +2,7 @@
 
 namespace Devkeita\Laraliff\Providers;
 
+use Devkeita\Laraliff\JWTGuard;
 use Illuminate\Support\ServiceProvider;
 
 class LaraliffServiceProvider extends ServiceProvider
@@ -13,7 +14,8 @@ class LaraliffServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishConfig();
+        $this->extendAuthGuard();
     }
 
     /**
@@ -23,6 +25,31 @@ class LaraliffServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+    }
+
+    protected function extendAuthGuard()
+    {
+        $this->app['auth']->extend('laraliff', function ($app, $name, array $config) {
+            $guard = new JWTGuard(
+                $app['tymon.jwt'],
+                new LiffUserProvider(
+                    $this->app['hash'],
+                    $this->app['config']['auth.providers.'.$config['provider'].'.model']
+                ),
+                $app['request']
+            );
+
+            $app->refresh('request', $guard, 'setRequest');
+
+            return $guard;
+        });
+    }
+
+    private function publishConfig()
+    {
+        $path = realpath(__DIR__.'/../../config/config.php');
+
+        $this->publishes([$path => config_path('laraliff.php')], 'config');
+        $this->mergeConfigFrom($path, 'laraliff');
     }
 }
