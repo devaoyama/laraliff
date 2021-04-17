@@ -1,0 +1,16 @@
+{
+    "name": "devkeita/laraliff",
+    "description": "LIFF authentication for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "devkeita",
+            "email": "keita.mywork@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "tymon/jwt-auth": "^1.0"
+    }
+}
