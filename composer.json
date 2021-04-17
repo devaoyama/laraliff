@@ -11,6 +11,14 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "illuminate/support": "^8.37"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Devkeita\\Laraliff\\Providers\\LaraliffServiceProvider"
+            ]
+        }
     }
 }
