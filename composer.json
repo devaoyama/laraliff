@@ -15,6 +15,11 @@
         "tymon/jwt-auth": "^1.0",
         "guzzlehttp/guzzle": "^5|^6|^7"
     },
+    "autoload": {
+        "psr-4": {
+            "Devkeita\\Laraliff\\": "src/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
