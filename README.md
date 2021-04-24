@@ -74,6 +74,22 @@ class CreateUsersTable extends Migration
 
 ```
 
+##### ※スキーマの名前はconfigから変更できます
+
+```php:laraliff.php
+<?php
+
+return [
+    'liff_channel_id' => env('LIFF_CHANNEL_ID', 'liff_channel_id'),
+    'fields' => [
+        'liff_id' => 'liff_id', // プロフィールIDが入るフィールド
+        'name' => 'name', // プロフィールの名前
+        'picture' => 'picture', // プロフィール画像
+    ],
+];
+
+```
+
 #### 認証に使用するモデルに以下のメソッドを追加
 
 ```php:User.php
