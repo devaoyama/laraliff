@@ -3,6 +3,7 @@
 namespace Devkeita\Laraliff\Providers;
 
 use Devkeita\Laraliff\JWTGuard;
+use Devkeita\Laraliff\Services\LiffVerificationService;
 use Illuminate\Support\ServiceProvider;
 
 class LaraliffServiceProvider extends ServiceProvider
@@ -25,6 +26,9 @@ class LaraliffServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('devkeita.liff_verification_service', function () {
+            return new LiffVerificationService();
+        });
     }
 
     protected function extendAuthGuard()
@@ -33,10 +37,11 @@ class LaraliffServiceProvider extends ServiceProvider
             $guard = new JWTGuard(
                 $app['tymon.jwt'],
                 new LiffUserProvider(
-                    $this->app['hash'],
-                    $this->app['config']['auth.providers.'.$config['provider'].'.model']
+                    $app['hash'],
+                    $app['config']['auth.providers.'.$config['provider'].'.model']
                 ),
-                $app['request']
+                $app['request'],
+                $app['devkeita.liff_verification_service']
             );
 
             $app->refresh('request', $guard, 'setRequest');
