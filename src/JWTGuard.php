@@ -13,7 +13,10 @@ class JWTGuard extends \Tymon\JWTAuth\JWTGuard
         if (!$user = $this->provider->retrieveByLiffId($liff['sub'])) {
             return false;
         }
-        $user->update(['name' => $liff['name'], 'picture' => $liff['picture']]);
+        $user->update([
+            config('laraliff.fields.name') => $liff['name'],
+            config('laraliff.fields.picture') => $liff['picture']
+        ]);
 
         return $login ? $this->login($user) : true;
     }
