@@ -139,7 +139,7 @@ class User extends Authenticatable implements JWTSubject
 
 'guards' => [
     'api' => [
-        'driver' => 'jwt',
+        'driver' => 'laraliff',
         'provider' => 'users',
     ],
 ],
